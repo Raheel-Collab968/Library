@@ -41,29 +41,29 @@ const AddBookPopup = () => {
           <form onSubmit={handleAddBook}>
             <div className='mb-4'>
               <label className='block text-gray-900 font-medium'>Book Title</label>
-              <input type="email" value={title} onChange={(e)=> setTitle(e.target.value)} required
+              <input type="text" value={title} onChange={(e)=> setTitle(e.target.value)} required
               placeholder="Book Title" className='w-full px-4 py-2 border-2 border-black rounded-md'/>
             </div>
             <div className='mb-4'>
               <label className='block text-gray-900 font-medium'>Book Author</label>
-              <input type="email" value={author} onChange={(e)=> setAuthor(e.target.value)} required
+              <input type="text" value={author} onChange={(e)=> setAuthor(e.target.value)} required
               placeholder="Book Author" className='w-full px-4 py-2 border-2 border-black rounded-md'/>
             </div>
             <div className='mb-4'>
               <label className='block text-gray-900 font-medium'>Book Price (Price for borrowing)</label>
-              <input type="email" value={price} onChange={(e)=> setPrice(e.target.value)} required
+              <input type="text" value={price} onChange={(e)=> setPrice(e.target.value)} required
               placeholder="Book Price" className='w-full px-4 py-2 border-2 border-black rounded-md'/>
             </div>
             <div className='mb-4'>
               <label className='block text-gray-900 font-medium'>Quantity</label>
-              <input type="email" value={quantity} onChange={(e)=> setQuantity(e.target.value)} required
+              <input type="text" value={quantity} onChange={(e)=> setQuantity(e.target.value)} required
               placeholder="Book Quantity" className='w-full px-4 py-2 border-2 border-black rounded-md'/>
             </div>
              <div className='mb-4 h-full'>
               <label className='block text-gray-900 font-medium'>Description</label>
-              <taxtarea value={description} onChange={(e)=> setDescription(e.target.value)} rows={4}
+              <textarea  value={description} onChange={(e)=> setDescription(e.target.value)} rows={4}
                 placeholder="Book Description" className='w-full px-4 py-2 border-2 border-black rounded-md'/>
-              {/* <input type="email" value={description} onChange={(e)=> setDescription(e.target.value)} required/> */}
+              {/* <input type="" value={description} onChange={(e)=> setDescription(e.target.value)} required/> */}
             </div>
             <div className='flex justify-end space-x-4'>
               <button className='px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300' type='button'

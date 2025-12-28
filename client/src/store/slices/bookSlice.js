@@ -40,6 +40,20 @@ const bookSlice = createSlice({
             state.loading = false;
             state.message = action.payload
         },
+        deleteBookRequest(state){
+            state.loading = true;
+            state.error = null;
+            state.message = null;
+        },
+        deleteBookSuccess(state, action){
+            state.loading = false;
+            state.message = action.payload.message;
+            state.books = state.books.filter((book) => book._id !== action.payload.bookId);
+        },
+        deleteBookFailed(state, action){
+            state.loading = false;
+            state.error = action.payload
+        },
         resetBookSlice(state){
             state.error = null;
             state.message = null;
@@ -48,9 +62,12 @@ const bookSlice = createSlice({
     },
 });
 
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 export const fetchAllBooks = () => async (dispatch) => {
     dispatch(bookSlice.actions.fetchBooksRequest());
-    await axios.get("http://localhost:4000/api/v1/book/all",
+    await axios.get(`${backendUrl}/api/v1/book/all`,
         { withCredentials: true}).then(res=>{
         dispatch(bookSlice.actions.fetchBooksSuccess(res.data.books));
     }).catch(err=>{
@@ -60,7 +77,7 @@ export const fetchAllBooks = () => async (dispatch) => {
 
 export const addBook = (data) => async(dispatch)=>{
     dispatch(bookSlice.actions.addBookRequest());
-    await axios.post("http://localhost:4000/api/v1/book/admin/add", data, {
+    await axios.post(`${backendUrl}/api/v1/book/admin/add`, data, {
         withCredentials: true, 
         headers: {
             "Content-Type": "application/json"
@@ -74,6 +91,17 @@ export const addBook = (data) => async(dispatch)=>{
         dispatch(bookSlice.actions.addBookFailed(err.response.data.message));
     });
 };
+
+export const deleteBook = (bookId, data) => async (dispatch) => {
+    try{
+        dispatch(bookSlice.actions.deleteBookRequest());
+        const {data} = await axios.delete(`${backendUrl}/api/v1/book/delete/${bookId}`, 
+            { withCredentials: true });
+        dispatch(bookSlice.actions.deleteBookSuccess({ message: data.message}));
+    } catch (error) {
+        dispatch(bookSlice.actions.deleteBookFailed(error.response.data.message));
+    }
+}
 
 export const resetBookSlice = () => async (dispatch) =>{
     dispatch(bookSlice.actions.resetBookSlice());
